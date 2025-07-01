@@ -180,7 +180,8 @@ def main() -> int:
             print(f"No model weights found at {args.model_in}", file=sys.stderr)
             return 1
 
-    log_file = open(args.log_out, "w")
+    with open(args.log_out, "w") as log_file:
+        log_file.write("Batch\tAverage Reward")
 
     pbar = tqdm(range(1, 1 + args.batches), desc="Batch: 0 | Avg reward: ?")
 
@@ -196,9 +197,13 @@ def main() -> int:
             device,
         )
 
+        with open(args.log_out, "w") as log_file:
+            log_file.write(f"{batch}\t{average_reward}")
+
         pbar.set_description(f"Batch: {batch} | Avg reward: {average_reward}")
 
         if batch % args.save_every_n_batch == 0:
+            print("Saving model!", file=sys.stderr)
             save_model_and_optimizer_parameters(agent, optimizer, args.model_out)
 
     save_model_and_optimizer_parameters(agent, optimizer, args.model_out)
@@ -208,5 +213,5 @@ def main() -> int:
 
 if __name__ == "__main__":
     exit_code = main()
-    print("Exiting...")
+    print("Finished Training!", file=sys.stderr)
     sys.exit(exit_code)
