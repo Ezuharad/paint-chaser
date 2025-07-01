@@ -1,0 +1,9 @@
+.envrc
+.git
+.gitignore
+.stow-local-ignore
+.venv
+__pycache__
+
+script
+src
