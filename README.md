@@ -25,7 +25,7 @@ git clone https://github.com/ezuharad/paint-chase.git
 cd paint-chase
 ```
 
-2. Create and activate a virtual environment. Although python's venv module should work, this has only been tested with [uv](https://docs.astral.sh/uv/).
+2. Create and activate a virtual environment. Python's native environment management utilities (venv and pip), as well as [uv](https://docs.astral.sh/uv/), should work.
 ```bash
 uv venv
 source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
@@ -33,7 +33,7 @@ source .venv/bin/activate  # On Windows, use `.venv\Scripts\activate`
 
 3. Install the package.
 ```bash
-uv pip install -e .
+uv pip install -r requirements.txt
 ```
 
 ## Usage
@@ -41,10 +41,10 @@ uv pip install -e .
 The agent can be trained using the provided [training script](script/train_reinforce.py). The most basic usage is as follows:
 
 ```bash
-python3 script/train_reinforce.py <BATCHES> --model-output <MODEL-OUTPUT-PATH>
+python3 script/train_reinforce.py <BATCHES> --model-out <MODEL-OUTPUT-PATH>
 ```
 
-In order for training to work, Paint Chase must be running and in focus, with the game's screen region completely covered by the dimensions specified in the `SCREEN_REGION` constant defined in [train_reinforce.py](script/train_reinforce.py). The currently defined constant is designed for the minimum game resolution. Because the neural network was designed with the lowest resolution available, changing the dimensions of the region aren't recommended, although it is possible to just change the resblock size.
+In order for training to work, Paint Chase must be running and in focus, with the game's screen region completely covered by the dimensions specified in the `SCREEN_REGION` constant defined in [train_reinforce.py](script/train_reinforce.py) in the top left corner of your desktop. The currently defined constant is designed for the minimum game resolution. Because the neural network was designed with the lowest resolution available, changing the dimensions of the region aren't recommended, although it is possible to just change the resblock size.
 
 ### Configuration
 Training parameters can be configured through environment variables or command-line arguments. CLI arguments take precedence over environment variables.
